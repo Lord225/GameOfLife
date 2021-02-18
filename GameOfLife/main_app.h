@@ -40,7 +40,6 @@ public:
 	float pixel_scale = GOL_SIZE / 10.0f;
 	bool show_times = false;
 public:
-	
 	void OnStart(ArgParser::map_type&& args) override {
 		GOL_SIZE = std::get<int>(args["size"]);
 		pixel_scale = ((float)GOL_SIZE)/ std::get<float>(args["pixelsize"]);
