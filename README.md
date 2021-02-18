@@ -2,12 +2,19 @@
 
 Implementacja GameOfLife z użyciem OpenGL.
 
-Sterowanie
+Sterowanie:
 * Kółko myszky: zoom
 * Naciśnięcie kółka myszy: przesuwanie
 * Spacja - Zmiana trybu (animacja/skokowy)
 * Strzałka w lewo - zmiana prędkości w trybie animacji (w dół)
 * Strzałka w prawko - zmiana prędkości w trybie animacji (w górę) / skok w trybie skokowym
+
+Argumenty:
+* --pixelsize [float] - zmiana rozmiaru pikseli (def. 10.0)
+* --shaderpath [str] - ścieżka do folderu z shaderami (.frag, .geom) (def. ../../GameOfLife)
+* --showsteptimes - flaga okreslajaca czy w konsoli powinny pojawiac sie informacje o czasach symulacji i czasie na ramke (def. false)
+* --size [int] - rozmiar planszy (def. 1024, musi byc podzielne przez --threads)
+* --threads [int] - ilość uruchamianych wątków przy symulacji (def. 8)
 
 Przykład użycia
 ```
