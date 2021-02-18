@@ -5,6 +5,9 @@ Implementacja GameOfLife z użyciem OpenGL.
 Sterowanie
 * Kółko myszky: zoom
 * Naciśnięcie kółka myszy: przesuwanie
+* Spacja - Zmiana trybu (animacja/skokowy)
+* Strzałka w lewo - zmiana prędkości w trybie animacji (w dół)
+* Strzałka w prawko - zmiana prędkości w trybie animacji (w górę) / skok w trybie skokowym
 
 Przykład użycia
 ```
