@@ -4,7 +4,7 @@ Implementacja GameOfLife z użyciem OpenGL.
 
 Sterowanie
 * Kółko myszky: zoom
-* Naciśnięcie kółka myszy i przesunięcie: przesunięcie
+* Naciśnięcie kółka myszy: przesuwanie
 
 Przykład użycia
 ```
