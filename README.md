@@ -2,6 +2,10 @@
 
 Implementacja GameOfLife z użyciem OpenGL.
 
+Sterowanie
+* Kółko myszky: zoom
+* Naciśnięcie kółka myszy i przesunięcie: przesunięcie
+
 Przykład użycia
 ```
 GameOfLife.exe --size 8196 --threads 8 --showsteptimes --shaderpath ../../GameOfLife
