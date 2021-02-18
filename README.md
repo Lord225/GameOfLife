@@ -62,7 +62,7 @@ sim: dt = 1102.22ms      frame: dt = 13.0700ms
 --threads 4
 sim: dt = 267.83ms       frame: dt = 16.6242ms
 --threads 6
-sim: dt = 219.663ms       frame: dt = 16.6242ms
+sim: dt = 219.663ms      frame: dt = 16.6242ms
 --threads 8
 sim: dt = 163.281ms      frame: dt = 16.356ms
 --threads 12
