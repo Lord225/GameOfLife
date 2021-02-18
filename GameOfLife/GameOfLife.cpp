@@ -62,10 +62,10 @@ int main(const int num, const char** args)
             {
             	{"size", 1024},
             	{"pixelsize", 10.0f},
-                {"shaderpath", std::string("../GameOfLife")},
+                {"shaderpath", std::string("../../GameOfLife")},
             	{"threads", 8},
             	{"randominit", false},
-            	{"showsteptimes", false},
+            	{"showsteptimes", true},
             }
         )
     );
