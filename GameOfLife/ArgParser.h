@@ -43,6 +43,17 @@ public:
 	ArgParser(map_type&& args) : parsed_args(std::move(args)){}
 	map_type parsed_args;
 
+	void give_help()
+	{
+		std::cout << "Argument parsing usage:" << std::endl;
+		std::cout << ".\\GameOfLife.exe --arg1 param1 --arg2 --arg3 param2" << std::endl;
+		std::cout << "Possible arguments:" << std::endl;
+		for (auto& [key, val] : parsed_args)
+		{
+			std::cout << "--" << key << std::endl;
+		}
+	}
+	
 	
 	void parse_arguments(const int num, const char** args_c)
 	{
@@ -59,10 +70,16 @@ public:
 			if(starts_with(args[i], "--"))
 			{
 				auto command = args[i].substr(2);
+
+				if (command == "help") {
+					give_help();
+					return;
+				}
+				
 				value value = true;
 				try
 				{
-					if (i < args.size())
+					if (i < args.size()-1)
 						value = get_value(args[i + 1]);
 					else
 						value = true;

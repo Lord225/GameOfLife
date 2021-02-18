@@ -60,12 +60,12 @@ int main(const int num, const char** args)
     auto argparser = ArgParser(
         ArgParser::map_type(
             {
-            	{"size", 8196},
+            	{"size", 1024},
             	{"pixelsize", 10.0f},
                 {"shaderpath", std::string("../GameOfLife")},
             	{"threads", 8},
             	{"randominit", false},
-            	{"showsteptimes", true},
+            	{"showsteptimes", false},
             }
         )
     );
@@ -75,13 +75,7 @@ int main(const int num, const char** args)
 	catch(std::exception& err)
     {
         std::cout << err.what() << std::endl;
-        std::cout << "Argument parsing usage:" << std::endl;
-        std::cout << ".\\GameOfLife.exe --arg1 param1 --arg2 --arg3 param2" << std::endl;
-        std::cout << "Possible arguments:" << std::endl;
-		for(auto& [key, val] : argparser.parsed_args)
-		{
-            std::cout << "--" << key << std::endl;
-		}
+        argparser.give_help();
         return -1;
     }
 	
