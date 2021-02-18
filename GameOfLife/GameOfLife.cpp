@@ -65,7 +65,7 @@ int main(const int num, const char** args)
                 {"shaderpath", std::string("../../GameOfLife")},
             	{"threads", 8},
             	{"randominit", false},
-            	{"showsteptimes", true},
+            	{"showsteptimes", false},
             }
         )
     );
