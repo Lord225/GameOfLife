@@ -55,3 +55,24 @@ sim: dt = 284.879ms      frame: dt = 25.2842ms
 8  - 539%
 16 - 487%
 ```
+Skalowanie wydajności z ilością rdzeni (R5 3600):
+```
+GameOfLife.exe --size 8196 --threads 1 --showsteptimes --shaderpath ../../GameOfLife 
+sim: dt = 1102.22ms      frame: dt = 13.0700ms
+--threads 4
+sim: dt = 267.83ms       frame: dt = 16.6242ms
+--threads 6
+sim: dt = 219.663ms       frame: dt = 16.6242ms
+--threads 8
+sim: dt = 163.281ms      frame: dt = 16.356ms
+--threads 12
+sim: dt = 134.978ms      frame: dt = 17.4600ms
+```
+```
+1  - 100%
+4  - 270%
+6  - 500%
+8  - 678%
+12 - 820%
+```
+
