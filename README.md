@@ -2,12 +2,19 @@
 
 Implementacja GameOfLife z użyciem OpenGL.
 
-Sterowanie
+Sterowanie:
 * Kółko myszky: zoom
 * Naciśnięcie kółka myszy: przesuwanie
 * Spacja - Zmiana trybu (animacja/skokowy)
 * Strzałka w lewo - zmiana prędkości w trybie animacji (w dół)
 * Strzałka w prawko - zmiana prędkości w trybie animacji (w górę) / skok w trybie skokowym
+
+Argumenty:
+* --pixelsize [float] - zmiana rozmiaru pikseli (def. 10.0)
+* --shaderpath [str] - ścieżka do folderu z shaderami (.frag, .geom) (def. ../../GameOfLife)
+* --showsteptimes - flaga okreslajaca czy w konsoli powinny pojawiac sie informacje o czasach symulacji i czasie na ramke (def. false)
+* --size [int] - rozmiar planszy (def. 1024, musi byc podzielne przez --threads)
+* --threads [int] - ilość uruchamianych wątków przy symulacji (def. 8)
 
 Przykład użycia
 ```
@@ -48,3 +55,24 @@ sim: dt = 284.879ms      frame: dt = 25.2842ms
 8  - 539%
 16 - 487%
 ```
+Skalowanie wydajności z ilością rdzeni (R5 3600):
+```
+GameOfLife.exe --size 8196 --threads 1 --showsteptimes --shaderpath ../../GameOfLife 
+sim: dt = 1102.22ms      frame: dt = 13.0700ms
+--threads 4
+sim: dt = 267.83ms       frame: dt = 16.6242ms
+--threads 6
+sim: dt = 219.663ms      frame: dt = 16.6242ms
+--threads 8
+sim: dt = 163.281ms      frame: dt = 16.356ms
+--threads 12
+sim: dt = 134.978ms      frame: dt = 17.4600ms
+```
+```
+1  - 100%
+4  - 270%
+6  - 500%
+8  - 678%
+12 - 820%
+```
+
