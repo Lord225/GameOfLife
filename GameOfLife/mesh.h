@@ -39,7 +39,7 @@ public:
 		Init(texture.w, texture.h);
 	}
 
-	void draw(Shader& shader, Camera& camera) 
+	void draw(Shader& shader, Camera& camera)
 	{
 		shader.Use();
 		shader.camera(camera, model);
@@ -49,7 +49,7 @@ public:
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 	}
 
-	const size_t depth = 8;
+	size_t depth = 8;
 	// updates texture array with new image.
 	void update_texture(const char* data, size_t w, size_t h, size_t offset) const {
 		glBindTexture(GL_TEXTURE_2D_ARRAY, texture.texture_id);
@@ -76,11 +76,11 @@ public:
 		//layout of Vertex (5 floats):
 		//[pos_x, pos_y, pos_z], [tex_x, texy]
 		//      glm::vec3          glm::vec2
-		
+
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)0);                 //vertex cords (3xfloat)
 		glEnableVertexAttribArray(0);
 
-		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(3*sizeof(float))); //texture cords (2xfloat)
+		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(3 * sizeof(float))); //texture cords (2xfloat)
 		glEnableVertexAttribArray(1);
 
 		//texture behavior (GL_NEAREST + CLAMPING)
@@ -92,8 +92,8 @@ public:
 		glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 		glPixelStorei(GL_UNPACK_ALIGNMENT, 1); //Nie mam pojêcia co siê tu dzieje ale brak tego przyspo¿y³ mi sporo problemów.
 
-		char* arr = new char[w * h* depth];
-		for (size_t i = 0; i < w*h* depth; i++)
+		char* arr = new char[w * h * depth];
+		for (size_t i = 0; i < w * h * depth; i++)
 		{
 			arr[i] = 0;
 		}
