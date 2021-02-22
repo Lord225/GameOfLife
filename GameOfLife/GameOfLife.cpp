@@ -90,7 +90,7 @@ int main(const int num, const char** args)
     glfwMakeContextCurrent(window);
 
     make_glad();
-    .
+   
     glfwSetFramebufferSizeCallback(window, resize);
     glfwSetMouseButtonCallback(window, mouse_button_callback);
     glfwSetScrollCallback(window, scroll_callback);
