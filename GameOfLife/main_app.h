@@ -24,6 +24,7 @@
 //	   (ADD SAFE CHECK FOR LINKING XD)
 //	   (2x Fail)
 
+//Implementation of app.
 class main_app : public Application {
 public:
 	main_app() = default;

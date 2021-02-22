@@ -23,7 +23,7 @@ struct Texture {
 	size_t h;
 };
 
-
+//OpenGL Plane class with spreetsheet animation.
 class Mesh
 {
 public:
@@ -49,7 +49,8 @@ public:
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 	}
 
-	size_t depth = 8;
+	const size_t depth = 8;
+	// updates texture array with new image.
 	void update_texture(const char* data, size_t w, size_t h, size_t offset) const {
 		glBindTexture(GL_TEXTURE_2D_ARRAY, texture.texture_id);
 		glTexSubImage3D(GL_TEXTURE_2D_ARRAY, 0, 0, 0, offset, w, h, 1, GL_RED, GL_UNSIGNED_BYTE, data);
@@ -58,6 +59,8 @@ public:
 	void set_position(glm::vec3 pos) {
 		model = translate(glm::mat4(1), pos);
 	}
+
+	//OpenGL stuff
 	void Init(size_t w, size_t h) {
 		glGenVertexArrays(1, &VAO);
 		glGenBuffers(1, &VBO);
@@ -70,31 +73,38 @@ public:
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(GLuint) * indices.size(), indices.data(), GL_STATIC_DRAW);
 
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)0); //cords
+		//layout of Vertex (5 floats):
+		//[pos_x, pos_y, pos_z], [tex_x, texy]
+		//      glm::vec3          glm::vec2
+		
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)0);                 //vertex cords (3xfloat)
 		glEnableVertexAttribArray(0);
 
-		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(3*sizeof(float))); //text cords
+		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(3*sizeof(float))); //texture cords (2xfloat)
 		glEnableVertexAttribArray(1);
 
-
+		//texture behavior (GL_NEAREST + CLAMPING)
 		glGenTextures(1, &(texture.texture_id));
 		glBindTexture(GL_TEXTURE_2D_ARRAY, texture.texture_id);
 		glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 		glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 		glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 		glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-		glPixelStorei(GL_UNPACK_ALIGNMENT, 1); //Wtf?
+		glPixelStorei(GL_UNPACK_ALIGNMENT, 1); //Nie mam pojêcia co siê tu dzieje ale brak tego przyspo¿y³ mi sporo problemów.
 
-		char* arr = new char[w * h*8];
-
-		for (size_t i = 0; i < w*h*8; i++)
+		char* arr = new char[w * h* depth];
+		for (size_t i = 0; i < w*h* depth; i++)
 		{
 			arr[i] = 0;
 		}
 
+		//generating texture array. (1 channal, 1 byte, WxH textures. 
+		glTexImage3D(GL_TEXTURE_2D_ARRAY, 0, GL_RED, w, h, depth, 0, GL_RED, GL_UNSIGNED_BYTE, arr);
 
-		glTexImage3D(GL_TEXTURE_2D_ARRAY, 0, GL_RED, w, h, 8, 0, GL_RED, GL_UNSIGNED_BYTE, arr);
+		delete[] arr;
 	}
+
+	//Fuszerka. Zwraca po³o¿enie punktu w world na texture space.
 	glm::vec2 global_to_plane_cords(glm::vec2& world)
 	{
 		glm::vec3 scale;
@@ -108,6 +118,5 @@ public:
 	}
 private:
 	GLuint VAO, VBO, EBO;
-	
 };
 

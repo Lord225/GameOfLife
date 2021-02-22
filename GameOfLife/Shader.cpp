@@ -9,7 +9,7 @@ void UnlinkedShader::LoadFromFile(ShaderType type, std::string&& source)
 	std::fstream stream(source);
 	if (stream.good()) {
 		std::string shader_source;
-		shader_source.assign(std::istreambuf_iterator<char>(stream), std::istreambuf_iterator<char>());
+		shader_source.assign(std::istreambuf_iterator<char>(stream), std::istreambuf_iterator<char>()); //loads file to std::string
 		compile(type, std::move(shader_source));
 	}
 	else {

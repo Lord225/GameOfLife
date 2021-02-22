@@ -20,6 +20,8 @@ class Camera;
 
 class Shader;
 
+// Unlinced shader class. You can load and compile your shader. This shader is not usable as long as is not builded.
+// You can compile with 'Link'. Function will return linked shader ('Shader class') where you can du all wild stuff.
 class UnlinkedShader
 {
 public:
@@ -29,7 +31,7 @@ public:
 	};
 	UnlinkedShader();
 	void LoadFromFile(ShaderType type, std::string&& source);
-	[[nodiscard]]Shader Link();
+	[[nodiscard]]Shader Link(); //Links Shader and returns linked version.
 	
 private:
 	std::vector<GLuint> shaders;
@@ -44,7 +46,7 @@ private:
 	friend Shader;
 };
 
-
+// Linked Shader class aka standard shader. You can't construct it by yourself. But you can change 'Unlinked Shader' into thisone.
 class Shader : public UnlinkedShader
 {
 public:
@@ -54,26 +56,30 @@ public:
 	{
 		this->compiled_program = 0;
 	}
+	
+	void Use() const;
+	void UnUse() const;
+	void AddUniform(std::string&& uniform);     //Adds new uniform to list.
+
+	void camera(Camera& cam, glm::mat4& model); //Applys all camera transformations.
+
+	[[nodiscard]] ShaderAssign operator[](std::string&& atrib); //Sets uniform value. You can use synax shader["name_of_uniform"] = value (any type) it will decuct good assign operator.
+	[[nodiscard]] GLuint get_program() const;
+
+private:
 	Shader(UnlinkedShader&& other)
 	{
-		if(&other != this)
+		if (&other != this)
 		{
 			this->compiled_program = other.compiled_program;
 			this->uniforms = std::move(other.uniforms);
 			other.compiled_program = 0;
 		}
 	}
-	void Use() const;
-	void UnUse() const;
-	void AddUniform(std::string&& uniform);
-
-	void camera(Camera& cam, glm::mat4& model);
-
-	[[nodiscard]] ShaderAssign operator[](std::string&& atrib);
-	[[nodiscard]] GLuint get_program() const;
+	friend UnlinkedShader;
 };
 
-
+//Helper class returned by shader. 
 class ShaderAssign {
 public:
 	ShaderAssign() = default;
@@ -81,7 +87,9 @@ public:
 	ShaderAssign& operator=(ShaderAssign&&) = default;
 
 	ShaderAssign(Shader* ptr, GLuint uniform) :ptr(ptr), uniform(uniform) {}
+	~ShaderAssign() = default;
 
+	//All possible uniform assigns
 	void operator=(const float var) const {
 		glUniform1f(uniform, var);
 	}
@@ -105,20 +113,26 @@ private:
 	const GLuint uniform;
 };
 
+//Abstract camera class. Contains common functions for cameras.
 class Camera {
 public:
 	glm::mat4 view;
-	glm::mat4 transform(glm::mat4& model)
+
+	// model to screen
+	glm::mat4 transform(glm::mat4& model) const
 	{
 		
 		return projection * view * model;
 	}
 
-	glm::vec4 inversed_transform(glm::vec3 pos) {
+	// possible screen to camera local
+	[[nodiscard]] glm::vec4 inversed_transform(const glm::vec3 pos) const {
 
 		return glm::vec4(inversed * glm::make_vec4(pos));;
 	}
-	glm::vec4 inversed_global_transform(glm::vec3 pos) {
+
+	// possible screen to world
+	[[nodiscard]] glm::vec4 inversed_global_transform(const glm::vec3 pos) const {
 		return viewInversed * glm::make_vec4(pos);
 	}
 
