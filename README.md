@@ -16,6 +16,10 @@ Argumenty:
 * --size [int] - rozmiar planszy (def. 1024, musi byc podzielne przez --threads)
 * --threads [int] - ilość uruchamianych wątków przy symulacji (def. 8)
 
+![image](https://user-images.githubusercontent.com/49908210/113857081-5dda0f00-97a2-11eb-8afd-e32afaa40a52.png)
+
+![image](https://user-images.githubusercontent.com/49908210/113857116-67fc0d80-97a2-11eb-9bc3-ba099ee94c44.png)
+
 Przykład użycia
 ```
 GameOfLife.exe --size 8196 --threads 8 --showsteptimes --shaderpath ../../GameOfLife
